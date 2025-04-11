@@ -23,10 +23,99 @@
 
 ## Descripción
 
-Resolución de primer desafío de entrevista tecnica para Dodo
+Resolución de primer desafío de entrevista tecnica para Dodo.
 
+Este proyecto implementa un microservicio REST el cual está encargado de exponer información de y centralizar la información de un colaborador
+
+## 🧾 Endpoints principales
+
+### `GET /collaborators`
+Obtiene todos los colaboradores registrados.
+
+- **Query Params:**
+  - `withDeleted` (boolean, opcional): Si `true`, incluye los colaboradores eliminados lógicamente.
+
+### `GET /collaborators/:identifier`
+Busca un colaborador por su `identifier` único.
+
+- **URL Params:**
+- `identifier` (string): rut del colaborador sin puntos ni guión
+
+### `POST /collaborators`
+Crea un nuevo colaborador. Si el `identifier` ya existe y fue eliminado, lo restaura.
+
+- **Body:**
+```json
+{
+  "name": "José Flores",
+  "identifier": "112223334",
+  "companies": {
+    "bank": ["bci", "banco_estado"],
+    "telco": ["entel"],
+    "caja": ["los_andes"]
+  }
+}
+```
+
+### `PUT /collaborators/:id`
+Actualiza completamente un colaborador (reemplaza todo el contenido).
+
+**URL Params:**
+
+- `identifier` (string): rut del colaborador sin puntos ni guión
+
+**Body:**
+```json
+{
+  "name": "José Flores",
+  "companies": {
+    "bank": ["bci"],
+    "telco": ["entel"]
+  }
+}
+```
+
+### `PATCH /collaborators/:id`
+Actualiza parcialmente uno o más campos de un colaborador.
+
+**URL Params:**
+
+- `id` (string): ID del colaborador.
+
+**Body (ejemplo):**
+```json
+{
+  "name": "José F. Actualizado"
+}
+```
+
+### `DELETE /collaborators/:id`
+Elimina lógicamente un colaborador.
+
+**URL Params:**
+
+- `identifier` (string): ID del colaborador.
+
+### `GET /benefits/collaborator/:identifier`
+Obtiene los beneficios asociados a un colaborador según su `identifier`.
+
+Este endpoint permite filtrar beneficios por tipo (`bank`, `telco`, `caja`, etc.) o bien retornar **todos los beneficios disponibles** si se usa el parámetro `all=true`.
+
+**URL Params:**
+
+- `identifier` (string): Identificador único del colaborador.
+
+**Query Params:**
+
+- `benefitType` (string[]): Tipos de beneficios separados por coma. Ej: `?benefitType=bank,telco`
+
+**Ejemplos:**
+
+- Obtener beneficios de tipo `bank` y `telco`:
 
 ## Instrucciones para correr el proyecto
+
+Crear archivo con nombre .env en la raíz del proyecto y dentro agregar el contenido que se indica en el archivo .pdf
 
 Instalar dependecias
 ```bash
@@ -52,3 +141,24 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
+## Supuestos tomados
+
+- Solo se harán preguntas relacionadas con beneficios.
+- Al ser mock apis los beneficios que se responderan serán fijos y siempre los mismos independiente de las empresas, bancos o caja de compensación que se le asignen como contratadas al usuario.
+- El formato de rut de cara al chatbot debe ser sin puntos y con guión.
+- Se asume que para la instalación del proyecto ya se tiene instalado node y npm.
+- Al haber creación y manejo de usuarios se asumió que debía existir una base de datos donde almacenarlos, en este caso se utilizó MongoDB para almacenarlos
+
+## Mejoras o futuras ideas
+
+### Implementación de autenticación
+
+Por temas de seguridad se debe implementar autenticación a la hora de crear o manejar los datos de los colaboradores, lo mismo pasa con el endpoint que obtiene beneficios basado en el rut de un colaborador.
+
+### Asociar número de teléfono u otros datos al usuario
+
+Para un mejor flujo se podrían asociar uno o más números de teléfono al colaborador, de esta manera se evitaria preguntar por datos constantemente y podría mejorar la usabilidad del chat, de igual manera se deberían tener consideraciones a la hora de implementarlo, como es el caso de que pasa si se pregunta por un segundo rut desde un mismo número de teléfono.
+
+### Beneficios sugeridos
+
+Teniendo una implementación de un chatbot de manera correcta y trabajando con una ia que analice el lenguaje natural y las preferencias del usuario se podría sugerir beneficios relacionados a los que el usuario consulta, por ejemplo si consulta por beneficios relacionados con viajes se le podría recomendar dentro de la misma respuesta beneficios de estadía en hoteles, etc.

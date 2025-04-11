@@ -6,6 +6,4 @@ export class RequestParamsDto {
     @IsArray()
     benefitType?: string[] = []
 
-    @IsBoolean()
-    all?: boolean = false
 }
