@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseBoolPipe, Patch, Post, Put, Query } from "@nestjs/common";
+import { Body, Controller, DefaultValuePipe, Delete, Get, Param, ParseBoolPipe, Patch, Post, Put, Query } from "@nestjs/common";
 import { CollaboratorService } from "./collaborator.service";
 import { CreateCollaboratorDto } from "./dtos/create-collaborator.dto";
 import { CollaboratorDocument } from "./shemas/collaborator.schema";
@@ -21,23 +21,24 @@ export class CollaboratorController {
 
     @Get()
     async findAll(
-        @Query('withDeleted', ParseBoolPipe) withDeleted = false,
+        @Query('withDeleted', new DefaultValuePipe(false), ParseBoolPipe) withDeleted: boolean
     ): Promise<CollaboratorDocument[]> {
         return this.collaboratorService.getAllCollaborators(withDeleted)
     }
 
-    @Get('identifier/:identifier')
+
+    @Get('/:identifier')
     async findByIdentifier(@Param('identifier') identifier: string): Promise <CollaboratorDocument> {
         return this.collaboratorService.getCollaboratorByIdentifier(identifier)
     }
     
-    @Put('/:id')
-    async update(@Param('id') id: string, @Body() data: UpdateCollaboratorDto): Promise <CollaboratorDocument> {
+    @Put('/:identifier')
+    async update(@Param('identifier') id: string, @Body() data: UpdateCollaboratorDto): Promise <CollaboratorDocument> {
         return this.collaboratorService.updateCollaborator(id, data)
     }
 
-    @Patch('/:id')
-    async partialUpdate(@Param('id') id: string, @Body() data: PartialUpdateCollaboratorDto): Promise <CollaboratorDocument> {
+    @Patch('/:identifier')
+    async partialUpdate(@Param('identifier') id: string, @Body() data: PartialUpdateCollaboratorDto): Promise <CollaboratorDocument> {
         return this.collaboratorService.partialUpdateCollaborator(id, data) 
     }
 }

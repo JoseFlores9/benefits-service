@@ -52,7 +52,7 @@ export class CollaboratorService {
 
   async updateCollaborator(id: string, data: UpdateCollaboratorDto): Promise<CollaboratorDocument> {
     try {
-      const existing = await this.CollaboratorModel.findOneWithDeleted({ _id: id }).exec()
+      const existing = await this.CollaboratorModel.findOneWithDeleted({ identifier: id }).exec()
 
       if (!existing) {
         throw new NotFoundException(`Collaborator with ID ${id} not found.`)
@@ -63,7 +63,7 @@ export class CollaboratorService {
       }
 
       const updated = await this.CollaboratorModel.findOneAndUpdate(
-        { _id: id },
+        { identifier: id },
         data,
         { new: true }
       ).exec()
@@ -84,7 +84,7 @@ export class CollaboratorService {
     data: PartialUpdateCollaboratorDto
   ): Promise<CollaboratorDocument> {
     try {
-      const existing = await this.CollaboratorModel.findOneWithDeleted({ _id: id }).exec()
+      const existing = await this.CollaboratorModel.findOneWithDeleted({ identifier: id }).exec()
 
       if (!existing) {
         throw new NotFoundException(`Collaborator with ID ${id} not found.`)
@@ -95,7 +95,7 @@ export class CollaboratorService {
       }
 
       const updated = await this.CollaboratorModel.findOneAndUpdate(
-        { _id: id },
+        { identifier: id },
         { $set: data },
         { new: true }
       ).exec()
