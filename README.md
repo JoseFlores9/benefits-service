@@ -43,19 +43,6 @@ Correr el proyecto
 $ npm run start
 ```
 
-## Correr tests
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
 ## 🧾 Endpoints principales
 
 ### `GET /collaborators`
@@ -65,13 +52,13 @@ Obtiene todos los colaboradores registrados.
   - `withDeleted` (boolean, opcional): Si `true`, incluye los colaboradores eliminados lógicamente.
 
 ### `GET /collaborators/:identifier`
-Busca un colaborador por su `identifier` único.
+Busca un colaborador por su `identifier` (rut) único.
 
 - **URL Params:**
 - `identifier` (string): rut del colaborador sin puntos ni guión
 
 ### `POST /collaborators`
-Crea un nuevo colaborador. Si el `identifier` ya existe y fue eliminado, lo restaura.
+Crea un nuevo colaborador. Si el `identifier`(rut) ya existe y fue eliminado, lo restaura.
 
 - **Body:**
 ```json
