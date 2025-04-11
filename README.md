@@ -27,6 +27,35 @@ Resolución de primer desafío de entrevista tecnica para Dodo.
 
 Este proyecto implementa un microservicio REST el cual está encargado de exponer información de y centralizar la información de un colaborador
 
+## Instrucciones para correr el proyecto
+
+Crear archivo con nombre .env en la raíz del proyecto y dentro agregar el contenido que se indica en el archivo .pdf
+
+Instalar dependecias
+```bash
+$ npm install
+```
+
+Correr el proyecto
+
+```bash
+# development
+$ npm run start
+```
+
+## Correr tests
+
+```bash
+# unit tests
+$ npm run test
+
+# e2e tests
+$ npm run test:e2e
+
+# test coverage
+$ npm run test:cov
+```
+
 ## 🧾 Endpoints principales
 
 ### `GET /collaborators`
@@ -113,34 +142,6 @@ Este endpoint permite filtrar beneficios por tipo (`bank`, `telco`, `caja`, etc.
 
 - Obtener beneficios de tipo `bank` y `telco`:
 
-## Instrucciones para correr el proyecto
-
-Crear archivo con nombre .env en la raíz del proyecto y dentro agregar el contenido que se indica en el archivo .pdf
-
-Instalar dependecias
-```bash
-$ npm install
-```
-
-Correr el proyecto
-
-```bash
-# development
-$ npm run start
-```
-
-## Correr tests
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
 ## Supuestos tomados
 
 - Solo se harán preguntas relacionadas con beneficios.
